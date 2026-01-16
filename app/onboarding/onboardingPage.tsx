@@ -2,12 +2,12 @@ import { StyleSheet } from 'react-native';
 
 export const theme = {
   colors: {
-    background: '#0f1724',
+    background: '#2a74eb',
     primary: '#35d0ff',
     dotActive: '#35d0ff',
     dotInactive: '#8fb8c6',
     text: '#ffffff',
-    textDim: '#cfeaf6',
+    textDim: '#cfeaf690',
     cta: '#12d7f1',
   },
 };
@@ -15,7 +15,6 @@ export const theme = {
 const onboardingStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.background,
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 24,
@@ -23,21 +22,26 @@ const onboardingStyles = StyleSheet.create({
   brand: {
     color: theme.colors.primary,
     fontSize: 22,
-    fontWeight: '700',
+    fontWeight: '600',
     marginBottom: 18,
   },
   artworkWrap: {
-    width: 180,
-    height: 180,
-    borderRadius: 90,
+    width: 170,
+    height: 170,
+    borderRadius: 120,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#0ea5e9',
+    backgroundColor: '#448dbd',
     marginBottom: 18,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.18,
+    shadowRadius: 18,
+    elevation: 6,
   },
   artwork: {
-    width: 140,
-    height: 140,
+    width: 150,
+    height: 150,
   },
   dotsRow: {
     flexDirection: 'row',
@@ -58,7 +62,7 @@ const onboardingStyles = StyleSheet.create({
   title: {
     color: theme.colors.text,
     fontSize: 18,
-    fontWeight: '700',
+    fontWeight: '600',
     marginTop: 10,
     marginBottom: 6,
   },
@@ -66,13 +70,14 @@ const onboardingStyles = StyleSheet.create({
     color: theme.colors.textDim,
     textAlign: 'center',
     marginBottom: 24,
+    fontSize: 15,
   },
   cta: {
     backgroundColor: theme.colors.cta,
     paddingVertical: 12,
     paddingHorizontal: 34,
     borderRadius: 8,
-    width: '70%',
+    width: 240,
     alignItems: 'center',
   },
   ctaText: {
