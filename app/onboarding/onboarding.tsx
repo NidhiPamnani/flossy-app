@@ -36,8 +36,8 @@ export default function OnboardingScreen() {
           <TouchableOpacity
             style={onboardingStyles.cta}
             onPress={() => {
-            router.push('/(tabs)/home');
-          }}
+              router.push('/onboarding/onboardingDetails');
+            }}
             accessibilityRole="button"
             accessibilityLabel="Get Started"
           >

@@ -72,6 +72,32 @@ const onboardingStyles = StyleSheet.create({
     marginBottom: 24,
     fontSize: 15,
   },
+  inner: {
+    flex: 1,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+  },
+  input: {
+    width: 240,
+    height: 40,
+    borderRadius: 10,
+    backgroundColor: 'rgba(255,255,255,0.06)',
+    paddingHorizontal: 16,
+    color: theme.colors.text,
+    marginVertical: 12,
+  },
+  buttonDisabled: {
+    opacity: 0.5,
+  },
+  buttonPressed: {
+    opacity: 0.85,
+  },
+  buttonText: {
+    color: '#00303f',
+    fontWeight: '700',
+  },
   cta: {
     backgroundColor: theme.colors.cta,
     paddingVertical: 12,
