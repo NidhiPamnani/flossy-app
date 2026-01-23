@@ -6,28 +6,26 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import styles from "./buttonStyles";
 import onboardingStyles from "./onboardingPage";
 
-type FrequencyOption = 
-  | "food-stuck"
-  | "dentist"
-  | "almost-daily"
-  | "few-times"
-  | "hardly-ever";
+type GoalsOption = 
+  | "0-1x"
+  | "2-3x"
+  | "4+"
+  | "unsure";
 
-interface OnboardingFrequencyProps {
+interface OnboardingGoalProps {
   userName: string;
-  onContinue: (frequency: FrequencyOption) => void;
+  onContinue: (chronotype: GoalsOption) => void;
 }
 
-export default function OnboardingFrequency({ userName, onContinue }: OnboardingFrequencyProps) {
-  const [selectedOption, setSelectedOption] = useState<FrequencyOption | null>(null);
+export default function OnboardingChronotype({ userName, onContinue }: OnboardingGoalProps) {
+  const [selectedOption, setSelectedOption] = useState<GoalsOption | null>(null);
   const router = useRouter();
 
-  const options: { id: FrequencyOption; label: string }[] = [
-    { id: "food-stuck", label: "Whenever I have food stuck in my teeth" },
-    { id: "dentist", label: "Only before dentist appointments" },
-    { id: "almost-daily", label: "Almost everyday" },
-    { id: "few-times", label: "A few times a week" },
-    { id: "hardly-ever", label: "I hardly ever floss" },
+  const options: { id: GoalsOption; label: string }[] = [
+    { id: "0-1x", label: "0-1x per week" },
+    { id: "2-3x", label: "2-3x per week" },
+    { id: "4+", label: "4+ times a week" },
+    { id: "unsure", label: "Not sure/I need guidance" },
   ];
 
   const handleContinue = () => {
@@ -35,7 +33,7 @@ export default function OnboardingFrequency({ userName, onContinue }: Onboarding
       if (onContinue) {
         onContinue(selectedOption);
       } else {
-        router.push('/onboarding/onboardingGoals');
+        router.push('/onboarding/onboardingChronotype');
       }
     }
   };
@@ -60,14 +58,14 @@ export default function OnboardingFrequency({ userName, onContinue }: Onboarding
       <View style={onboardingStyles.dotsRow}>
         <View style={[onboardingStyles.dot, onboardingStyles.dotActive]} />
         <View style={[onboardingStyles.dot, onboardingStyles.dotActive]} />
-        <View style={[onboardingStyles.dot ]} />
+        <View style={[onboardingStyles.dot, onboardingStyles.dotActive ]} />
         <View style={[onboardingStyles.dot ]} />
       </View>
 
       {/* Question */}
       <View style={onboardingStyles.brand}>
-        <Text style={onboardingStyles.title}>How often do you floss right now?</Text>
-        <Text style={styles.subtitle}>(you can be honest - nobody is looking)</Text>
+        <Text style={onboardingStyles.title}>When do you prefer to floss?</Text>
+        <Text style={styles.subtitle}>(There's no wrong or right!)</Text>
       </View>
 
       {/* Options */}

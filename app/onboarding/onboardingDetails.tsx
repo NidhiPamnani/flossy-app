@@ -13,10 +13,11 @@ export default function OnboardingDetails({ onContinue }: { onContinue?: (name: 
       if (onContinue) {
         onContinue(name.trim());
       } else {
-        router.push('/(tabs)/home');
+        router.push('/onboarding/onboardingFrequency');
       }
     }
   };
+
 
   return (
     <LinearGradient 
@@ -32,7 +33,7 @@ export default function OnboardingDetails({ onContinue }: { onContinue?: (name: 
             {/* Progress Dots */}
             <View style={onboardingStyles.dotsRow}>
                 <View style={[onboardingStyles.dot, onboardingStyles.dotActive]} />
-                <View style={[onboardingStyles.dot, onboardingStyles.dotActive]} />
+                <View style={[onboardingStyles.dot ]} />
                 <View style={onboardingStyles.dot} />
             </View>
 

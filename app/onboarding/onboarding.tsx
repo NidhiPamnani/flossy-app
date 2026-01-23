@@ -24,12 +24,6 @@ export default function OnboardingScreen() {
             />
           </View>
 
-          <View style={onboardingStyles.dotsRow}>
-            <View style={[onboardingStyles.dot, onboardingStyles.dotActive]} />
-            <View style={onboardingStyles.dot} />
-            <View style={onboardingStyles.dot} />
-          </View>
-
           <Text style={onboardingStyles.title}>Welcome to Flossy 👋</Text>
           <Text style={onboardingStyles.subtitle}>Small habits, healthier smiles.</Text>
 
