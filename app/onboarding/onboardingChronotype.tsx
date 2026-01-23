@@ -6,6 +6,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import styles from "./buttonStyles";
 import onboardingStyles from "./onboardingPage";
 
+
 type ChronotypeOption = 
   | "night"
   | "morning"
@@ -21,12 +22,19 @@ export default function OnboardingChronotype({ userName, onContinue }: Onboardin
   const [selectedOption, setSelectedOption] = useState<ChronotypeOption | null>(null);
   const router = useRouter();
 
-  const options: { id: ChronotypeOption; label: string }[] = [
-    { id: "night", label: "Night Flosser" },
-    { id: "morning", label: "Morning Flosser" },
-    { id: "after-meals", label: "After Meals" },
-    { id: "flexible", label: "Flexible" },
+  const options: { id: ChronotypeOption; label: string, subtitle: string }[] = [
+    { id: "night", label: "Night Flosser", subtitle: "Ideal if you floss before bed" },
+    { id: "morning", label: "Morning Flosser", subtitle: "Great if you like starting clean" },
+    { id: "after-meals", label: "After Meals", subtitle: "Works for people who floss reactively" },
+    { id: "flexible", label: "Flexible" , subtitle: "I don't have a consistent rhythm yet"},
   ];
+
+  const iconMap: Record<ChronotypeOption, string> = {
+    night: 'bedtime',
+    morning: 'brightness_5',
+    'after-meals': 'restaurant',
+    flexible: 'sync',
+  };
 
   const handleContinue = () => {
     if (selectedOption) {
@@ -59,7 +67,7 @@ export default function OnboardingChronotype({ userName, onContinue }: Onboardin
         <View style={[onboardingStyles.dot, onboardingStyles.dotActive]} />
         <View style={[onboardingStyles.dot, onboardingStyles.dotActive]} />
         <View style={[onboardingStyles.dot, onboardingStyles.dotActive ]} />
-        <View style={[onboardingStyles.dot ]} />
+        <View style={[onboardingStyles.dot, onboardingStyles.dotActive ]} />
       </View>
 
       {/* Question */}
@@ -70,27 +78,52 @@ export default function OnboardingChronotype({ userName, onContinue }: Onboardin
 
       {/* Options */}
       <View style={styles.optionsWrap}>
-        {options.map((option) => (
-          <Pressable
-            key={option.id}
-            onPress={() => setSelectedOption(option.id)}
-            style={({pressed,hovered}) => [
-              styles.optionButton,
-              selectedOption === option.id && styles.optionButtonSelected,
-              pressed && styles.optionPressed,
-            ]}
-          >
-            <Text
-              style={[
-                styles.optionText,
-                selectedOption === option.id && styles.optionTextSelected,
+        {options.map((option) => {
+          const isSelected = selectedOption === option.id;
+          return (
+            <Pressable
+              key={option.id}
+              onPress={() => setSelectedOption(option.id)}
+              style={({pressed,hovered}) => [
+                styles.optionButton,
+                isSelected && styles.optionButtonSelected,
+                pressed && styles.optionPressed,
               ]}
             >
-              {option.label}
-            </Text>
-            {selectedOption === option.id && <Icon name="check" size={20} color="#000" />}
-          </Pressable>
-        ))}
+              <View style={{flex:1, flexDirection:'row', alignItems:'center'}}>
+                {option.id === 'morning' ? (
+                  <Text style={{ fontSize: 21, marginRight: 12, color:"white" }}>{'☼'}</Text>
+                ) : (
+                  <Icon
+                    name={iconMap[option.id]}
+                    size={22}
+                    color={isSelected ? '#000' : '#fff'}
+                    style={{ marginRight: 12 }}
+                  />
+                )}
+                <View style={{flex:1}}>
+                  <Text
+                    style={[
+                      styles.optionText,
+                      isSelected && styles.optionTextSelected,
+                    ]}
+                  >
+                    {option.label}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.subLabel,
+                      isSelected && styles.optionTextSelected,
+                    ]}
+                  >
+                    {option.subtitle}
+                  </Text>
+                </View>
+              </View>
+              {isSelected && <Icon name="check" size={20} color="#000" />}
+            </Pressable>
+          );
+        })}
       </View>
 
       {/* Continue Button */}

@@ -38,12 +38,12 @@ const styles = StyleSheet.create({
     fontStyle: "italic" 
 },
   optionsWrap: { 
-    marginVertical: 20 
+    marginVertical: 20, 
 },
   optionButton: {
     padding: 16,
     width: 400,
-    height: 50,
+    height: 65,
     backgroundColor: "rgba(255,255,255,0.1)",
     marginVertical: 6,
     borderRadius: 12,
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   optionText: { 
     color: "#f0ebeb", 
     fontSize: 16, 
-    fontWeight: "500"
+    fontWeight: "500",
 },
   optionTextSelected: { 
     color: "#000",  
@@ -70,6 +70,12 @@ const styles = StyleSheet.create({
   optionHovered: { // if you want web hover
     backgroundColor: "rgba(255,255,255,0.15)",
   },
+  subLabel: {
+      color: '#cfeaf690',
+      textAlign: 'left',
+      marginBottom: 0,
+      fontSize: 14,
+    },
 });
 
 export default styles;

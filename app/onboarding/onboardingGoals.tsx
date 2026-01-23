@@ -6,32 +6,38 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import styles from "./buttonStyles";
 import onboardingStyles from "./onboardingPage";
 
-type GoalsOption = 
-  | "0-1x"
-  | "2-3x"
-  | "4+"
+type ReasonOption = 
+  | "dentist"
+  | "stress"
+  | "healthier gums"
+  | "health"
+  | "put-together"
+  | "appearance"
   | "unsure";
 
 interface OnboardingGoalProps {
   userName: string;
-  onContinue: (chronotype: GoalsOption) => void;
+  onContinue?: (reasons: ReasonOption[]) => void;
 }
 
 export default function OnboardingChronotype({ userName, onContinue }: OnboardingGoalProps) {
-  const [selectedOption, setSelectedOption] = useState<GoalsOption | null>(null);
+  const [selectedOptions, setSelectedOptions] = useState<ReasonOption[]>([]);
   const router = useRouter();
 
-  const options: { id: GoalsOption; label: string }[] = [
-    { id: "0-1x", label: "0-1x per week" },
-    { id: "2-3x", label: "2-3x per week" },
-    { id: "4+", label: "4+ times a week" },
-    { id: "unsure", label: "Not sure/I need guidance" },
+  const options: { id: ReasonOption; label: string }[] = [
+    { id: "dentist", label: "Easier dentist visits" },
+    { id: "stress", label: "Less stress (and cost!) at dentist visits" },
+    { id: "healthier gums", label: "Healthier gums as I age" },
+    { id: "health", label: "Long-term health benefits" },
+    { id: "put-together", label: "Feeling more put-together in my routine" },
+    { id: "appearance", label: "Appearance of my teeth" },
+    { id: "unsure", label: "I'm not sure yet" },
   ];
 
   const handleContinue = () => {
-    if (selectedOption) {
+    if (selectedOptions.length > 0) {
       if (onContinue) {
-        onContinue(selectedOption);
+        onContinue(selectedOptions);
       } else {
         router.push('/onboarding/onboardingChronotype');
       }
@@ -64,43 +70,52 @@ export default function OnboardingChronotype({ userName, onContinue }: Onboardin
 
       {/* Question */}
       <View style={onboardingStyles.brand}>
-        <Text style={onboardingStyles.title}>When do you prefer to floss?</Text>
-        <Text style={styles.subtitle}>(There's no wrong or right!)</Text>
+        <Text style={onboardingStyles.title}>Why does flossing matter to you?</Text>
+        <Text style={styles.subtitle}>(select all that apply)</Text>
       </View>
 
       {/* Options */}
       <View style={styles.optionsWrap}>
-        {options.map((option) => (
-          <Pressable
-            key={option.id}
-            onPress={() => setSelectedOption(option.id)}
-            style={({pressed,hovered}) => [
-              styles.optionButton,
-              selectedOption === option.id && styles.optionButtonSelected,
-              pressed && styles.optionPressed,
-            ]}
-          >
-            <Text
-              style={[
-                styles.optionText,
-                selectedOption === option.id && styles.optionTextSelected,
+        {options.map((option) => {
+          const isSelected = selectedOptions.includes(option.id);
+          return (
+            <Pressable
+              key={option.id}
+              onPress={() => {
+                if (isSelected) {
+                  setSelectedOptions((prev) => prev.filter((p) => p !== option.id));
+                } else {
+                  setSelectedOptions((prev) => [...prev, option.id]);
+                }
+              }}
+              style={({pressed,hovered}) => [
+                styles.optionButton,
+                isSelected && styles.optionButtonSelected,
+                pressed && styles.optionPressed,
               ]}
             >
-              {option.label}
-            </Text>
-            {selectedOption === option.id && <Icon name="check" size={20} color="#000" />}
-          </Pressable>
-        ))}
+              <Text
+                style={[
+                  styles.optionText,
+                  isSelected && styles.optionTextSelected,
+                ]}
+              >
+                {option.label}
+              </Text>
+              {isSelected && <Icon name="check" size={20} color="#000" />}
+            </Pressable>
+          );
+        })}
       </View>
 
       {/* Continue Button */}
       <Pressable
-        onPress={() => selectedOption && handleContinue()}
+        onPress={() => selectedOptions.length > 0 && handleContinue()}
         style={[
           onboardingStyles.cta,
-          !selectedOption && onboardingStyles.buttonDisabled,
+          selectedOptions.length === 0 && onboardingStyles.buttonDisabled,
         ]}
-        disabled={!selectedOption}
+        disabled={selectedOptions.length === 0}
       >
         <Text style={onboardingStyles.ctaText}>Continue</Text>
       </Pressable>
