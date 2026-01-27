@@ -41,7 +41,7 @@ export default function OnboardingChronotype({ userName, onContinue }: Onboardin
       if (onContinue) {
         onContinue(selectedOption);
       } else {
-        router.push('/(tabs)/home');
+        router.push('../reminders/notifications');
       }
     }
   };
