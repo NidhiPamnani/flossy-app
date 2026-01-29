@@ -114,14 +114,14 @@ const styles = StyleSheet.create({
 
   decorativeLeft: { position: "absolute", bottom: 80, left: 24, width: 48, height: 64, backgroundColor: "rgba(255,255,255,0.2)", borderRadius: 16, alignItems: "center", justifyContent: "center" },
   decorativeRight: { position: "absolute", bottom: 80, left: 120, width: 40, height: 56, backgroundColor: "rgba(255,255,255,0.2)", borderRadius: 20, alignItems: "flex-end", justifyContent: "flex-end", paddingBottom: 4 },
-  decorativeEmoji: { fontSize: 28 },
+  decorativeEmoji: { fontSize: 32 },
 
   arrow: { position: "absolute", bottom: 120, right: 16 },
   arrowEmoji: { fontSize: 32 },
 
   button: {
   marginTop: 10, // space after sink
-  width: '80%',
+  width: 320,
   paddingVertical: 16,
   borderRadius: 20,
   backgroundColor: '#22d3ee',

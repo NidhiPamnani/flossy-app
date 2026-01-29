@@ -80,7 +80,7 @@ const onboardingStyles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   input: {
-    width: 400,
+    width: 320,
     height: 40,
     borderRadius: 10,
     backgroundColor: 'rgba(255,255,255,0.06)',
@@ -103,7 +103,7 @@ const onboardingStyles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 34,
     borderRadius: 8,
-    width: 400,
+    width: 320,
     alignItems: 'center',
   },
   ctaText: {

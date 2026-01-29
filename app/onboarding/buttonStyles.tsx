@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 },
   optionButton: {
     padding: 16,
-    width: 400,
+    width: 330,
     height: 65,
     backgroundColor: "rgba(255,255,255,0.1)",
     marginVertical: 6,
