@@ -74,7 +74,7 @@ export default function BuyFlossScreen() {
         </View>
 
         {/* Product Cards */}
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ width: '100%', alignSelf: 'center' }} contentContainerStyle={{ paddingHorizontal: 16, gap: 16, justifyContent: 'center', alignItems: 'center' }}>
+        <ScrollView showsVerticalScrollIndicator={true} style={{ width: '100%', alignSelf: 'center' }} contentContainerStyle={{ paddingHorizontal: 16, gap: 16, justifyContent: 'center', alignItems: 'center' }}>
           {flossProducts.map((product) => (
             <View
               style={{
