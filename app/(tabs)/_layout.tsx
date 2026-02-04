@@ -7,6 +7,7 @@ export default function TabsLayout() {
   const [currentPage, setCurrentPage] = useState('home');
 
   return (
+    
     <View style={styles.container}>
       {/* Slot renders the current page (home, education, etc.) */}
       <Slot />
@@ -14,6 +15,7 @@ export default function TabsLayout() {
       {/* Bottom navigation */}
       <BottomNav currentPage={currentPage} onNavigate={setCurrentPage} />
     </View>
+  
   );
 }
 

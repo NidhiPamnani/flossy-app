@@ -9,9 +9,9 @@ interface BottomNavProps {
 
 export function BottomNav({ currentPage, onNavigate }: BottomNavProps) {
   const tabs = [
-    { id: 'home', label: 'Home', icon: Home },
     { id: 'education', label: 'Learn', icon: BookOpen },
     { id: 'insights', label: 'Insights', icon: BarChart2 },
+    { id: 'home', label: 'Home', icon: Home, isCenter: true },
     { id: 'challenges', label: 'Challenges', icon: Award },
     { id: 'profile', label: 'Profile', icon: User },
   ];
@@ -22,6 +22,32 @@ export function BottomNav({ currentPage, onNavigate }: BottomNavProps) {
         const IconComponent = tab.icon;
         const active = currentPage === tab.id;
 
+        // Special styling for center home button
+        if (tab.isCenter) {
+          return (
+            <Pressable
+              key={tab.id}
+              onPress={() => onNavigate(tab.id)}
+              style={styles.centerTab}
+            >
+              <View style={[
+                styles.centerIconCircle,
+                active && styles.centerIconCircleActive
+              ]}>
+                <IconComponent 
+                  width={28} 
+                  height={28} 
+                  color={active ? '#101828' : '#ffffff'} 
+                />
+              </View>
+              <Text style={[styles.label, active && styles.activeLabel]}>
+                {tab.label}
+              </Text>
+            </Pressable>
+          );
+        }
+
+        // Regular tabs
         return (
           <Pressable
             key={tab.id}
@@ -29,9 +55,15 @@ export function BottomNav({ currentPage, onNavigate }: BottomNavProps) {
             style={styles.tab}
           >
             <View style={[styles.iconCircle, active && styles.activeCircle]}>
-              <IconComponent width={20} height={20} color={active ? '#00d3f3' : '#ffffffa0'} />
+              <IconComponent 
+                width={24} 
+                height={24} 
+                color={active ? '#00d3f3' : '#ababab'} 
+              />
             </View>
-            <Text style={[styles.label, active && styles.activeLabel]}>{tab.label}</Text>
+            <Text style={[styles.label, active && styles.activeLabel]}>
+              {tab.label}
+            </Text>
           </Pressable>
         );
       })}
@@ -42,16 +74,22 @@ export function BottomNav({ currentPage, onNavigate }: BottomNavProps) {
 const styles = StyleSheet.create({
   navContainer: {
     flexDirection: 'row',
-    flex: 1,
     justifyContent: 'space-around',
-    paddingVertical: 12,
+    alignItems: 'flex-end',
+    paddingVertical: 8,
     paddingHorizontal: 16,
-    backgroundColor: '#1E3270', // gradient-ish dark color
+    backgroundColor: 'rgba(26, 47, 107, 0.95)',
     borderTopWidth: 1,
     borderTopColor: 'rgba(255,255,255,0.1)',
   },
   tab: {
     alignItems: 'center',
+    paddingVertical: 8,
+    minWidth: 60,
+  },
+  centerTab: {
+    alignItems: 'center',
+    marginTop: -24, // Elevate the center button
   },
   iconCircle: {
     width: 36,
@@ -59,14 +97,42 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 2,
+    marginBottom: 4,
   },
   activeCircle: {
     backgroundColor: '#2B4A9F',
   },
+  centerIconCircle: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#254294',
+    borderWidth: 2,
+    borderColor: 'rgba(255,255,255,0.2)',
+    marginBottom: 4,
+    // Shadow for iOS
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    // Elevation for Android
+    elevation: 8,
+  },
+  centerIconCircleActive: {
+    backgroundColor: '#00d3f3',
+    borderColor: 'transparent',
+    // Enhanced glow effect for active state
+    shadowColor: '#00d3f3',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.6,
+    shadowRadius: 20,
+    elevation: 12,
+  },
   label: {
     fontSize: 10,
-    color: '#ffffffa0',
+    color: '#ababab',
   },
   activeLabel: {
     color: '#00d3f3',

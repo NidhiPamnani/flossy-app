@@ -29,67 +29,65 @@ export function WeekView({
 
   return (
     <View style={styles.container}>
-    <LinearGradient
-      colors={['#577bd1', '#4f6fb3', '#2B4A9F', '#1E3A8A', '#1E3270']}
-      locations={[0, 0.18, 0.45, 0.75, 1]}
-      style={styles.card}
-    >
-      {/* Header */}
-      <View style={styles.header}>
-        <Pressable onPress={() => setWeekOffset(weekOffset - 1)} style={styles.arrow}>
-          <ChevronLeft color="#ffffff" width={24} height={24} />
-        </Pressable>
+      <LinearGradient
+        colors={['#577bd1', '#4f6fb3', '#2B4A9F', '#1E3A8A', '#1E3270']}
+        locations={[0, 0.18, 0.45, 0.75, 1]}
+        style={styles.card}
+      >
+        {/* Header */}
+        <View style={styles.header}>
+          <Pressable onPress={() => setWeekOffset(weekOffset - 1)} style={styles.arrow}>
+            <ChevronLeft color="#ffffff" width={24} height={24} />
+          </Pressable>
 
-        <Text style={styles.weekText}>{weekRange}</Text>
+          <Text style={styles.weekText}>{weekRange}</Text>
 
-        <Pressable onPress={() => setWeekOffset(weekOffset + 1)} style={styles.arrow}>
-          <ChevronRight color="#ffffff" width={24} height={24} />
-        </Pressable>
-      </View>
+          <Pressable onPress={() => setWeekOffset(weekOffset + 1)} style={styles.arrow}>
+            <ChevronRight color="#ffffff" width={24} height={24} />
+          </Pressable>
+        </View>
 
-      {/* Week days */}
-      <View style={styles.row}>
-        {Array.from({ length: 7 }).map((_, i) => {
-          const d = new Date(monday);
-          d.setDate(monday.getDate() + i);
-          const key = formatDateKey(d);
+        {/* Week days */}
+        <View style={styles.row}>
+          {Array.from({ length: 7 }).map((_, i) => {
+            const d = new Date(monday);
+            d.setDate(monday.getDate() + i);
+            const key = formatDateKey(d);
 
-          return (
-            <Pressable
-              key={key}
-              onPress={() => onSelectDate(key)}
-              style={[
-                styles.day,
-                key === selectedDate && styles.selected,
-                trackedDays.has(key) && styles.tracked,
-              ]}
-            >
-              <Text style={styles.text}>{d.getDate()}</Text>
-            </Pressable>
-          );
-        })}
-      </View>
-    </LinearGradient>
+            return (
+              <Pressable
+                key={key}
+                onPress={() => onSelectDate(key)}
+                style={[
+                  styles.day,
+                  key === selectedDate && styles.selected,
+                  trackedDays.has(key) && styles.tracked,
+                ]}
+              >
+                <Text style={styles.text}>{d.getDate()}</Text>
+              </Pressable>
+            );
+          })}
+        </View>
+      </LinearGradient>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 16,
+    paddingVertical: 12,
     alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
   },
   card: {
     backgroundColor: '#2c62cd',
-    borderRadius: 30,
+    borderRadius: 24,
     paddingVertical: 20,
-    paddingHorizontal: 20,
-    width: '85%',           // slightly smaller than TodaySection
+    paddingHorizontal: 16,
+    width: '100%',
+    maxWidth: 400,
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.1)',
-    marginVertical: 12,
   },
   header: {
     flexDirection: 'row',
@@ -108,6 +106,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    gap: 4,
   },
   day: {
     width: 42,
@@ -126,5 +125,6 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#ffffff',
+    fontSize: 14,
   },
 });
