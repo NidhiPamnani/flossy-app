@@ -15,7 +15,7 @@ export function SymptomTracker({ selectedDate }: { selectedDate: string }) {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.title}>Track Symptoms</Text>
       <View style={styles.grid}>
         {SYMPTOMS.map(s => {
@@ -43,28 +43,33 @@ export function SymptomTracker({ selectedDate }: { selectedDate: string }) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 12,
+  },
   title: {
     color: 'white',
     fontSize: 20,
-    fontWeight: '500',
-    marginBottom: 12,
-    paddingLeft: 35,
+    fontWeight: '600',
+    marginBottom: 16,
+    textAlign: 'center',
   },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    gap: 12,
+    gap: 10,
   },
   item: {
-    width: 380,
-    padding: 12,
+    width: '100%',
+    maxWidth: 400,
+    padding: 14,
     backgroundColor: '#2560b1',
     borderRadius: 16,
+    borderWidth: 2,
+    borderColor: 'transparent',
   },
   active: {
     borderColor: '#00d3f3',
-    borderWidth: 2,
   },
   itemContent: {
     flexDirection: 'row',
@@ -72,9 +77,9 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   iconCircle: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: 'rgba(255,255,255,0.2)',
     justifyContent: 'center',
     alignItems: 'center',
@@ -84,7 +89,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'white',
-    fontWeight: '400',
+    fontWeight: '500',
     fontSize: 15,
   },
 });

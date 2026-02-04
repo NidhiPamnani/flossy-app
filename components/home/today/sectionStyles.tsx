@@ -2,28 +2,26 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
-    paddingVertical: 16,
+    paddingVertical: 12,
     alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
   },
   card: {
-    backgroundColor: '#2c62cd',
-    borderRadius: 30,
-    padding: 30,
-    width: '90%',
+    borderRadius: 24,
+    padding: 24,
+    width: '100%',
+    maxWidth: 400,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.1)',
+    borderColor: 'rgba(36, 195, 231, 0.64)',
   },
   dateLabel: {
-    color: '#ababab',
-    fontSize: 12,
+    color: '#272525',
+    fontSize: 14,
     marginBottom: 4,
   },
   dateText: {
-    color: '#ababab',
-    fontSize: 12,
+    color: '#2c2a2a',
+    fontSize: 13,
     marginBottom: 16,
     textAlign: 'center',
   },
@@ -32,11 +30,13 @@ export const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     marginBottom: 16,
+    fontWeight: '500',
   },
   actions: {
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 8,
+    flexWrap: 'wrap',
   },
   button: {
     flexDirection: 'row',
@@ -49,6 +49,7 @@ export const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: 16,
+    fontWeight: '500',
   },
   yesButton: {
     backgroundColor: '#00d3f3',
@@ -57,10 +58,10 @@ export const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,165,0,0.7)',
   },
   noButton: {
-    backgroundColor: 'rgba(255,255,255,0.1)',
+    backgroundColor: 'rgba(255, 0, 0, 0.51)',
   },
   disabledButton: {
-    backgroundColor: 'rgba(255,255,255,0.1)',
+    backgroundColor: 'rgba(0, 0, 0, 0.28)',
     opacity: 0.5,
   },
   undoButton: {

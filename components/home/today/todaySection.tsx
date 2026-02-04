@@ -26,25 +26,19 @@ export function TodaySection({ date, status, onSetStatus, canSkip }: TodaySectio
   };
 
   const formattedDate = formatDate(date);
-  const isToday = date === '2026-01-16';
-
-  const gradientColors: Record<string, string[]> = {
-    yes: ['#00d3f3', '#00b8db'],
-    no: ['#ef4444', '#f87171'],
-    skip: ['#ffa500', '#ff8c00'],
-    default: ['#2a3d64', '#1f2937'],
-  };
-
-  const cardColors = status ? gradientColors[status] : gradientColors.default;
+  
+  // Check if date is today
+  const today = new Date();
+  const dateObj = new Date(date + 'T00:00:00');
+  const isToday = dateObj.toDateString() === today.toDateString();
 
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={['#577bd1', '#4f6fb3','#2B4A9F', '#1E3A8A', '#1E3270']}
+        colors={['#b0c3d8', '#7eb1e7', '#7db8f7', '#5CADFF', '#369AFF']}
         locations={[0, 0.18, 0.45, 0.75, 1]}
         style={styles.card}
       >
-      
         <Text style={styles.dateLabel}>{isToday ? 'Today' : formattedDate.dayName}</Text>
         <Text style={styles.dateText}>
           {formattedDate.dayName}, {formattedDate.monthName} {formattedDate.date}, {formattedDate.year}
@@ -64,7 +58,7 @@ export function TodaySection({ date, status, onSetStatus, canSkip }: TodaySectio
                 style={[styles.button, styles.yesButton]}
                 onPress={() => onSetStatus('yes')}
               >
-                <Check width={16} height={16} />
+                <Check width={16} height={16} color="white" />
                 <Text style={styles.buttonText}>Yes</Text>
               </TouchableOpacity>
 
@@ -73,7 +67,7 @@ export function TodaySection({ date, status, onSetStatus, canSkip }: TodaySectio
                 onPress={() => onSetStatus('skip')}
                 disabled={!canSkip}
               >
-                <Minus width={16} height={16} />
+                <Minus width={16} height={16} color="white" />
                 <Text style={styles.buttonText}>Skip</Text>
               </TouchableOpacity>
 
@@ -82,7 +76,7 @@ export function TodaySection({ date, status, onSetStatus, canSkip }: TodaySectio
                 onPress={() => onSetStatus('no')}
                 disabled={canSkip}
               >
-                <X width={16} height={16} />
+                <X width={16} height={16} color="white" />
                 <Text style={styles.buttonText}>No</Text>
               </TouchableOpacity>
             </>
@@ -91,7 +85,7 @@ export function TodaySection({ date, status, onSetStatus, canSkip }: TodaySectio
               style={[styles.button, styles.undoButton]}
               onPress={() => onSetStatus(null)}
             >
-              <X width={16} height={16} />
+              <X width={16} height={16} color="white" />
               <Text style={styles.buttonText}>Undo</Text>
             </TouchableOpacity>
           )}
