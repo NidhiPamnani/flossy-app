@@ -51,6 +51,8 @@ export function HomePage() {
 
 
   return (
+
+    <View style={{flex:1}}>
     <LinearGradient
       colors={['#3D5FA8', '#2B4A9F', '#1E3A8A', '#1E3270']}
       locations={[0, 0.3, 0.7, 1]}
@@ -90,6 +92,7 @@ export function HomePage() {
 
       <SymptomTracker selectedDate={selectedDate} />
     </LinearGradient>
+    </View>
   );
 }
 
