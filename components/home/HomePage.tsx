@@ -2,51 +2,22 @@ import { formatDateKey, startOfToday } from '@/lib/date';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useFloss } from '../../components/context/FlossContext';
 import { SymptomTracker } from './symptoms/symptomTracker';
 import { TodaySection } from './today/todaySection';
 import { WeekView } from './week/WeekView';
 
 export function HomePage() {
-  const MAX_SKIPS = 5;
   const WEEKLY_GOAL = 2;
-  const [skipsLeft, setSkipsLeft] = useState(MAX_SKIPS);
 
   const today = startOfToday();
+
+  const { trackedDays, setStatusForDate, skipsLeft, maxSkips } = useFloss();
 
   const [selectedDate, setSelectedDate] = useState(
     formatDateKey(today)
   );
 
-  const [trackedDays, setTrackedDays] = useState<
-    Map<string, 'yes' | 'no' | 'skip'>
-  >(new Map());
-
-  const setStatusForDate = (
-    date: string,
-    status: 'yes' | 'no' | 'skip' | null
-  ) => {
-    const prevStatus = trackedDays.get(date);
-    const next = new Map(trackedDays);
-
-    // remove status
-    if (status === null) {
-      next.delete(date);
-
-      // undo skip → restore skip
-      if (prevStatus === 'skip') {
-        setSkipsLeft((s) => Math.min(s + 1, MAX_SKIPS));
-      }
-    } else {
-      next.set(date, status);
-
-      // consume skip
-      if (status === 'skip' && prevStatus !== 'skip') {
-        setSkipsLeft((s) => Math.max(s - 1, 0));
-      }
-    }
-
-    setTrackedDays(next);
-  };
 
   return (
     <LinearGradient
@@ -74,7 +45,7 @@ export function HomePage() {
           <View style={styles.goalBlock}>
             <Text style={styles.goalLabel}>Skips left</Text>
             <Text style={styles.goalValue}>
-              {skipsLeft} / {MAX_SKIPS}
+              {skipsLeft} / {maxSkips}
             </Text>
           </View>
         </View>

@@ -1,4 +1,5 @@
 import { BottomNav } from '@/components/bottomNav';
+import { FlossProvider } from '@/components/context/FlossContext';
 import { Slot, usePathname, useRouter } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
@@ -38,6 +39,7 @@ export default function TabsLayout() {
   };
 
   return (
+    <FlossProvider>
     <View style={styles.container}>
       {/* Slot renders the current page (home, education, etc.) */}
       <View style={styles.content}>
@@ -50,6 +52,7 @@ export default function TabsLayout() {
         onNavigate={handleNavigate} 
       />
     </View>
+    </FlossProvider>
   );
 }
 
