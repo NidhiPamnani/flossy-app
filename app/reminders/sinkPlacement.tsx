@@ -1,3 +1,5 @@
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { Sparkles } from "lucide-react-native";
@@ -13,7 +15,9 @@ interface SinkPlacementPageProps {
 export default function SinkPlacementPage({ onContinue }: SinkPlacementPageProps) {
   const router = useRouter();
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
+    // Mark reminders as completed
+    await AsyncStorage.setItem('hasCompletedReminders', 'true');
     if (onContinue) {
       onContinue();
     } else {

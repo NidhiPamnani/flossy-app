@@ -1,3 +1,4 @@
+import { formatDateKey } from '@/lib/date';
 import { Flame, Star } from 'lucide-react-native';
 import { useMemo } from 'react';
 import { Text, View } from 'react-native';
@@ -20,9 +21,10 @@ export function InsightsStatsRow({ floss, year }: InsightsStatsRowProps) {
 
   const stats = useMemo(() => {
     // Convert Map entries to typed array
-    const days: { date: Date; status: FlossStatus }[] = Array.from(
+    const days: { key: string; date: Date; status: FlossStatus }[] = Array.from(
       floss.trackedDays.entries()
     ).map(([key, value]) => ({
+      key,
       date: new Date(key),
       status: value,
     })).filter(d => d.date.getFullYear() === currentYear);
@@ -32,10 +34,15 @@ export function InsightsStatsRow({ floss, year }: InsightsStatsRowProps) {
 
     // Current streak (consecutive flossed days ending today)
     let streak = 0;
-    for (const d of days) {
-      if (d.date > today) continue;
-      if (d.status === 'yes') streak++;
-      else break;
+    let date = new Date(today);
+    while (true) {
+      const key = formatDateKey(date);
+      if (floss.trackedDays.get(key) === 'yes') {
+        streak++;
+        date.setDate(date.getDate() - 1);
+      } else {
+        break;
+      }
     }
 
     // Month counts

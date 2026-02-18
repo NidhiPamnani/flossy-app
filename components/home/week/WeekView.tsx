@@ -54,14 +54,19 @@ export function WeekView({
             d.setDate(monday.getDate() + i);
             const key = formatDateKey(d);
 
+            const isFuture = d > today;
             return (
               <Pressable
                 key={key}
-                onPress={() => onSelectDate(key)}
+                onPress={() => {
+                  if (!isFuture) onSelectDate(key);
+                }}
+                disabled={isFuture}
                 style={[
                   styles.day,
                   key === selectedDate && styles.selected,
                   trackedDays.has(key) && styles.tracked,
+                  isFuture && { opacity: 0.4 },
                 ]}
               >
                 <Text style={styles.text}>{d.getDate()}</Text>

@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 export type FlossStatus = 'yes' | 'no' | 'skip';
 
@@ -18,9 +19,49 @@ const MAX_SKIPS = 5;
 const FlossContext = createContext<FlossContextType | null>(null);
 
 export function FlossProvider({ children }: { children: React.ReactNode }) {
-  const [trackedDays, setTrackedDays] = useState<
-    Map<string, FlossStatus>
-  >(new Map());
+
+  const [trackedDays, setTrackedDays] = useState<Map<string, FlossStatus>>(new Map());
+
+  // Load trackedDays from AsyncStorage on mount
+  useEffect(() => {
+    const loadTrackedDays = async () => {
+      try {
+        const data = await AsyncStorage.getItem('flossy_trackedDays');
+        if (data) {
+          const obj = JSON.parse(data);
+          const today = new Date();
+          const cleanedEntries = Object.entries(obj).filter(([date]) => {
+            const d = new Date(date);
+            // Only keep dates up to today
+            return d <= today;
+          });
+          const cleanedMap = new Map<string, FlossStatus>(cleanedEntries as [string, FlossStatus][]);
+          setTrackedDays(cleanedMap);
+          // Persist cleaned map if any entries were removed
+          if (cleanedEntries.length !== Object.entries(obj).length) {
+            await AsyncStorage.setItem('flossy_trackedDays', JSON.stringify(Object.fromEntries(cleanedMap)));
+          }
+        }
+      } catch (e) {
+        console.log('Failed to load floss data', e);
+      }
+    };
+    loadTrackedDays();
+  }, []);
+
+  // Save trackedDays to AsyncStorage whenever it changes
+  useEffect(() => {
+    const saveTrackedDays = async () => {
+      try {
+        // Convert Map to object for JSON
+        const obj = Object.fromEntries(trackedDays.entries());
+        await AsyncStorage.setItem('flossy_trackedDays', JSON.stringify(obj));
+      } catch (e) {
+        console.log('Failed to save floss data', e);
+      }
+    };
+    saveTrackedDays();
+  }, [trackedDays]);
 
   const [skipsLeft, setSkipsLeft] = useState(MAX_SKIPS);
 

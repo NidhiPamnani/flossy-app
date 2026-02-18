@@ -3,8 +3,10 @@ import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { useOnboarding } from "../../components/context/OnboardingContext";
 import styles from "./buttonStyles";
 import onboardingStyles from "./onboardingPage";
+
 
 
 type ChronotypeOption = 
@@ -15,12 +17,12 @@ type ChronotypeOption =
 
 interface OnboardingChronotypeProps {
   userName: string;
-  onContinue: (chronotype: ChronotypeOption) => void;
 }
 
-export default function OnboardingChronotype({ userName, onContinue }: OnboardingChronotypeProps) {
+export default function OnboardingChronotype({ userName }: OnboardingChronotypeProps) {
   const [selectedOption, setSelectedOption] = useState<ChronotypeOption | null>(null);
   const router = useRouter();
+  const { setCompleted } = useOnboarding();
 
   const options: { id: ChronotypeOption; label: string, subtitle: string }[] = [
     { id: "night", label: "Night Flosser", subtitle: "Ideal if you floss before bed" },
@@ -36,15 +38,16 @@ export default function OnboardingChronotype({ userName, onContinue }: Onboardin
     flexible: 'sync',
   };
 
-  const handleContinue = () => {
-    if (selectedOption) {
-      if (onContinue) {
-        onContinue(selectedOption);
-      } else {
-        router.push('../reminders/notifications');
-      }
-    }
-  };
+  const handleContinue = async () => {
+  if (!selectedOption) return;
+
+  // mark onboarding complete
+  await setCompleted();
+
+  // replace so user can't go back to onboarding
+  router.replace('/(tabs)/home');
+};
+
 
   return (
     <LinearGradient
