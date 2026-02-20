@@ -1,3 +1,4 @@
+import { useOnboarding } from "@/components/context/OnboardingContext";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from 'expo-router';
 import { useState } from "react";
@@ -6,17 +7,23 @@ import onboardingStyles from "./onboardingPage";
 
 export default function OnboardingDetails({ onContinue }: { onContinue?: (name: string) => void }) {
   const [name, setName] = useState("");
+  const { setOnboardingData } = useOnboarding();
+
   const router = useRouter();
   
-  const handleContinue = () => {
-    if (name.trim()) {
-      if (onContinue) {
-        onContinue(name.trim());
-      } else {
-        router.push('/onboarding/onboardingFrequency');
-      }
-    }
-  };
+  const handleContinue = async () => {
+  if (!name.trim()) return;
+
+  const trimmed = name.trim();
+
+  await setOnboardingData({ name: trimmed });
+
+  if (onContinue) {
+    onContinue(trimmed);
+  } else {
+    router.push('/onboarding/onboardingFrequency');
+  }
+};
 
 
   return (

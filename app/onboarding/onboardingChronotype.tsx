@@ -45,7 +45,7 @@ export default function OnboardingChronotype({ userName }: OnboardingChronotypeP
   await setCompleted();
 
   // replace so user can't go back to onboarding
-  router.replace('/(tabs)/home');
+  router.replace('/reminders/notifications');
 };
 
 

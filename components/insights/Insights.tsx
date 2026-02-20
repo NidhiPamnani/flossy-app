@@ -33,17 +33,35 @@ export function InsightsStatsRow({ floss, year }: InsightsStatsRowProps) {
     days.sort((a, b) => b.date.getTime() - a.date.getTime());
 
     // Current streak (consecutive flossed days ending today)
-    let streak = 0;
-    let date = new Date(today);
+    // Current streak
+  let streak = 0;
+
+  let date = new Date(today);
+  const todayKey = formatDateKey(today);
+  const todayStatus = floss.trackedDays.get(todayKey);
+
+  // If today explicitly skipped → streak = 0
+  if (todayStatus === 'skip') {
+    streak = 0;
+  } else {
+    // If today not "yes", move back one day
+    if (todayStatus !== 'yes') {
+      date.setDate(date.getDate() - 1);
+    }
+
+    // Count consecutive "yes"
     while (true) {
       const key = formatDateKey(date);
-      if (floss.trackedDays.get(key) === 'yes') {
+      const status = floss.trackedDays.get(key);
+
+      if (status === 'yes') {
         streak++;
         date.setDate(date.getDate() - 1);
       } else {
         break;
       }
     }
+  }
 
     // Month counts
     let flossed = 0;
