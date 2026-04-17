@@ -14,7 +14,6 @@ Developed as part of a behavioral decision-making research study with Professor 
 | Navigation | Expo Router (file-based routing) |
 | State Management | Redux |
 | Backend / API | RESTful APIs (custom) |
-| Database | SQLite |
 | UI | Custom components, Expo libraries |
 
 ---
